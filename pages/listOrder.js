@@ -2,6 +2,7 @@ const selectors = require("../selectors/selectors");
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const { CSV_FILE_PATH } = process.env;
+const csvFileAbsolutePath = path.resolve(__dirname, "../", CSV_FILE_PATH);
 
 async function checkPopupGotIt(page) {
   const gotItButton = page.locator(selectors.listOrder.gotItButton);
@@ -31,7 +32,7 @@ async function importCSVMerchizeOrder(page) {
 
   await page
     .locator(selectors.listOrder.importCSVMerchizeButton)
-    .setInputFiles(CSV_FILE_PATH);
+    .setInputFiles(csvFileAbsolutePath);
 }
 
 async function importTiktokOrder(page) {
