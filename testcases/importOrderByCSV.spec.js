@@ -6,17 +6,19 @@ import {
   checkPopupGotIt,
   clickImportOrderButton,
   importCSVMerchizeOrder,
+  importTiktokOrder,
+  importFBAOrder,
 } from "../pages/listOrder";
+const selectors = require("../selectors/selectors");
 const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const { BO_DOMAIN } = process.env;
 
-test("Back office - Import merchize csv orders", async ({ page }) => {
+test("Back office - Import normal, seller shipping order by csv files", async ({ page }) => {
   // Navigate to the backoffice domain
   await page.goto(BO_DOMAIN);
-
-  // Maximize the browser window
-  // await page.setViewportSize({ width: 1920, height: 1080 });
+  const title = page.locator(selectors.login.titleLoginPage);
+  await expect(title).toHaveText("Login to Merchize");
 
   // Login to the backoffice
   await login_bo(page);
@@ -33,8 +35,13 @@ test("Back office - Import merchize csv orders", async ({ page }) => {
   // Click the "Import Order" button
   await clickImportOrderButton(page);
 
-  // Select import CSV Merchize button
+  // Import normal, seller shipping order by csv files
   await importCSVMerchizeOrder(page);
 
-  await page.waitForTimeout(20000);
+  // Import TikTok shipping order by csv files
+  // await importTiktokOrder(page);
+
+  // Import FBA order by csv files
+  // await importFBAOrder(page);
+
 });
